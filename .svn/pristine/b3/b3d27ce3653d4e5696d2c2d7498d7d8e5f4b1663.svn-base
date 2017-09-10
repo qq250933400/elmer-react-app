@@ -1,0 +1,71 @@
+import React from 'react';
+import ComponentExd from '../extentions/ComponentExd';
+import PropTypes from 'prop-types';
+import Pages from '../../pages/index';
+
+class PageContainer extends ComponentExd {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isExists: false,
+            path: ''
+        };
+    }
+    getCurrentPage () {
+        const { route } = this.props;
+        const { app, mod, page } = route;
+        try {
+            const pageRoute = `${app}${mod}${page}`;
+            const curPage = Pages[pageRoute];
+            if (curPage !== undefined && curPage !== null) {
+                this.Page = curPage;
+            } else {
+                throw new Error('Can not find the page');
+            }
+            this.setState({
+                isExists: true
+            });
+        } catch (e) {
+            console.log(e);
+            this.setState({
+                isExists: false,
+                path: `${app}/${mod}/${page}`
+            });
+        }
+    }
+    componentDidMount () {
+        this.getCurrentPage();
+    }
+    render () {
+        const displayPage = () => {
+            const CurrentPage = this.Page;
+            if (this.state.isExists && CurrentPage) {
+                const PageElement = <CurrentPage {...this.props} />;
+                return PageElement;
+            } else {
+                return (
+                    <div>
+                        <h1>Page not found(404)</h1>
+                        <span>{this.state.path}</span>
+                    </div>
+                );
+            }
+        };
+        const currentPage = displayPage();
+        return currentPage;
+    }
+}
+
+PageContainer.propTypes = {
+    route: PropTypes.object.isRequired
+};
+
+PageContainer.defaultProps = {
+    route: {
+        app: 'AppIndex',
+        mod: 'ModIndex',
+        page: 'PageIndex'
+    }
+};
+
+export default PageContainer;

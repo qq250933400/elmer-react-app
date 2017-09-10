@@ -1,0 +1,19 @@
+import React, { Component } from 'react';
+import MobilePage from '../MobilePage';
+// import { Header } from 'UI/mobile';
+
+class MobileHomePage extends Component {
+    constructor (props) {
+        super(props);
+        this.state = {};
+    }
+    render () {
+        return (
+            <MobilePage >
+                <span>this is the page context</span>
+            </MobilePage>
+        );
+    }
+}
+
+export default MobileHomePage;

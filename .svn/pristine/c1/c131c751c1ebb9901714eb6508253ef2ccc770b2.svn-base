@@ -1,0 +1,70 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import ComponentExd from 'AliasCommon/extentions/ComponentExd';
+import Styles from 'AliasStyles/style.less';
+import { Header, Footer } from 'AliasUI/mobile';
+import MobileMenu from './MobileMenu';
+console.log(Styles);
+class MobilePage extends ComponentExd {
+    constructor(props) {
+        super(props);
+        this.handleOnHeaderClick = this.handleOnHeaderClick.bind(this);
+        this.handleOnMenuClose = this.handleOnMenuClose.bind(this);
+    }
+    handleOnHeaderClick () {
+        this.parent.className = 'OpenMenu';
+    }
+    handleOnMenuClose () {
+        this.parent.className = '';
+    }
+    render () {
+        const { hasHeader, hasFooter } = this.props;
+        const getContentClassName = () => {
+            if (hasHeader && hasFooter) {
+                return 'contentBoth';
+            } else if (hasHeader && !hasFooter) {
+                return 'contentHeader';
+            } else if (!hasHeader && hasFooter) {
+                return 'contentFooter';
+            } else {
+                return 'contentNone';
+            }
+        };
+        return (
+            <div ref={(self)=>{
+                this.parent = self;
+            }}>
+                <div className="context">
+                    {
+                        hasHeader && <Header onHeaderClick={this.handleOnHeaderClick} />
+                    }
+                    <section className={getContentClassName()}>
+                        <div>
+                            {this.getChildrenContext()}
+                        </div>
+                    </section>
+                    {
+                        hasFooter && <Footer />
+                    }
+                </div>
+                <MobileMenu onHiddenClick={this.handleOnMenuClose}/>
+            </div>
+        );
+    }
+}
+
+MobilePage.propTypes = {
+    hasHeader: PropTypes.bool.isRequired,
+    hasFooter: PropTypes.bool.isRequired,
+    headerHeight: PropTypes.number.isRequired,
+    footerHeight: PropTypes.number.isRequired
+};
+
+MobilePage.defaultProps = {
+    hasHeader: true,
+    hasFooter: true,
+    headerHeight: 40,
+    footerHeight: 50
+};
+
+export default MobilePage;

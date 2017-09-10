@@ -1,0 +1,11 @@
+import ComponentExdCls from './extentions/ComponentExd';
+import PageContainerCls from './component/PageContainer';
+import UI from './ui';
+
+export const ComponentExd = ComponentExdCls;
+export const PageContainer = PageContainerCls;
+export const Component = ComponentExdCls;
+console.log(ComponentExdCls, 'console in Common/index.js');
+export default {
+    ...UI
+};

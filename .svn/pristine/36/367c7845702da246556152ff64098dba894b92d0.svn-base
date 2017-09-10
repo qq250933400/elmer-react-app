@@ -1,0 +1,82 @@
+import React from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import ComponentExd from 'AliasCommon/extentions/ComponentExd';
+import UserHead from 'AliasImages/userhead.jpg';
+import fontStyles from 'AliasStyles/fonticon/iconfont.css';
+
+class MobileMenu extends ComponentExd {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isEditSign: false
+        };
+        this.handleOnMenuContextClick = this.handleOnMenuContextClick.bind(this);
+        this.handleSignClick = this.handleSignClick.bind(this);
+        this.handleSignBlur = this.handleSignBlur.bind(this);
+    }
+    handleOnMenuContextClick(event) {
+        event.stopPropagation();
+    }
+    handleSignClick () {
+        this.setState({
+            isEditSign: true
+        });
+    }
+    handleSignBlur () {
+        this.setState({
+            isEditSign: false
+        });
+    }
+    componentDidUpdate () {
+        this.state.isEditSign && this.SignInput && this.SignInput.focus();
+    }
+    render () {
+        const iconKey = 'icon-edit';
+        console.log(fontStyles);
+        return (
+            <div className="main_menu" onClick={this.props.onHiddenClick}>
+                <div className="main_menu_ct" onClick={this.handleOnMenuContextClick}>
+                    <div className="main_menu_info">
+                        <div className="main_menu_name">
+                            <a href="javascript:void(0)">
+                                <img src={UserHead} alt=""/>
+                            </a>
+                            <span>qq250933400(nickname)</span>
+                        </div>
+                        <div className="main_menu_sign">
+                            {!this.state.isEditSign && <span className={classNames([fontStyles.iconfont, fontStyles[iconKey]])} onClick={this.handleSignClick}>个性签名</span>}
+                            {
+                                this.state.isEditSign &&
+                                <input
+                                    ref={
+                                        (self) => {
+                                            this.SignInput = self;
+                                        }
+                                    }
+                                    onBlur={this.handleSignBlur} type="text"
+                                />
+                            }
+                        </div>
+                    </div>
+                    <div className="main_menu_list">
+                    </div>
+                    <div className="main_menu_bottom">
+                        bottom
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+MobileMenu.propTypes = {
+    menuData: PropTypes.array.isRequired,
+    onHiddenClick: PropTypes.func.isRequired
+};
+
+MobileMenu.defaultProps = {
+    menuData: []
+};
+
+export default MobileMenu;

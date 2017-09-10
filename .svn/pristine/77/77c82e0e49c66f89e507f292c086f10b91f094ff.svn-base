@@ -1,0 +1,91 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+class ComponentExd extends Component {
+    constructor (props) {
+        super(props);
+        this.getType = this.getType.bind(this);
+        this.isArray = this.isArray.bind(this);
+    }
+    getType (value) {
+        return Object.prototype.toString.call(value);
+    }
+    isArray (value) {
+        return this.getType(value) === '[object Array]';
+    }
+    isString (value) {
+        return this.getType(value) === '[object String]';
+    }
+    isNumber (value) {
+        return this.getType(value) === '[object Number]';
+    }
+    isDomElement(value) {
+        return /^(\[object)\s{1}(HTML)[a-zA-Z]*(Element\])$/.test(this.getType(value));
+    }
+    getChildrenContext (nextProps) {
+        const { children } = this.props;
+        const childrenList = this.isArray(children) ? children : [children];
+        console.log(nextProps);
+        return (
+            <div>
+                {
+                    childrenList.map((item, key) => {
+                        let result = null;
+                        if (React.isValidElement(item)) {
+                            result = React.cloneElement(item, {
+                                key,
+                                ...nextProps
+                            });
+                        } else {
+                            result = item;
+                        }
+                        return result;
+                    })
+                }
+            </div>
+        );
+    }
+    getUriParam(keyWords) {
+        const queryString = window.location.search || '';
+        const newQuery = queryString.replace(/^\?/,'').replace(/#.*?/,'');
+        const queryArr = newQuery.split('&');
+        let result = null;
+        for (const key in queryArr) {
+            const tmpQuery = queryArr[key];
+            const tmpSearch = tmpQuery.match(/^(.*?)=(.*?)$/);
+            if (tmpSearch && tmpSearch.length > 2 && keyWords.toLowerCase() === tmpSearch[1].toLowerCase()) {
+                result = tmpSearch[2];
+            }
+        }
+        return result;
+    }
+    getUriHash(keyWords) {
+        const hashQuery = window.location.hash;
+        const newQuery = hashQuery.replace(/^#/,'');
+        const queryArr = newQuery.split('&');
+        let result = null;
+        for (const key in queryArr) {
+            const tmpQuery = queryArr[key];
+            const tmpSearch = tmpQuery.match(/^(.*?)=(.*?)$/);
+            if (tmpSearch && tmpSearch.length > 2 && keyWords.toLowerCase() === tmpSearch[1].toLowerCase()) {
+                result = tmpSearch[2];
+            }
+        }
+        return result;
+    }
+    getDefaultValue (value, defaultValue) {
+        if (this.isString(value)) {
+            return value.length > 0 ? value : defaultValue;
+        } else if (value === undefined || value === null) {
+            return value;
+        } else {
+            return value;
+        }
+    }
+}
+
+ComponentExd.propTypes = {
+    children: PropTypes.node
+};
+
+export default ComponentExd;

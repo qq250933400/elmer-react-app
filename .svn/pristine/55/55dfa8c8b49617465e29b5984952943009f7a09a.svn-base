@@ -1,0 +1,26 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import ComponentExd from '../../../extentions/ComponentExd';
+import UserHead from 'AliasImages/userhead.jpg';
+
+class Header extends ComponentExd {
+    render () {
+        const { onHeaderClick } = this.props;
+        return (
+            <header>
+                <div>
+                    <button onClick={onHeaderClick} className="user_head">
+                        <img src={UserHead} alt="user_head"/>
+                    </button>
+                    <span>web聊天</span>
+                </div>
+            </header>
+        );
+    }
+}
+
+Header.propTypes = {
+    onHeaderClick: PropTypes.func
+};
+
+export default Header;

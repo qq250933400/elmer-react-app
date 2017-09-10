@@ -1,0 +1,11 @@
+
+const initState = {
+
+};
+
+const reducers = (state=initState, action) => {
+    console.log(action);
+    return state;
+};
+
+export default reducers;

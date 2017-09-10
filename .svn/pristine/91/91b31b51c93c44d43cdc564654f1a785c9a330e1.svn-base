@@ -1,0 +1,14 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Root from './root';
+import './styles';
+
+window.onload = ()=>{
+    const app = document.getElementById('app');
+    const rootPath = __dirname;
+    if (app) {
+        ReactDOM.render(<Root RootPath={rootPath} />, app);
+    }
+    // console.log(styles, 'pageStyle');
+    document.body.className = 'mobile theme_default';
+};

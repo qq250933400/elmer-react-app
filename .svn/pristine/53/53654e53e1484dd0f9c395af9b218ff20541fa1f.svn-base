@@ -1,0 +1,7 @@
+import AppMobileModIndexPageIndex from './AppMobile/ModIndex/PageIndex';
+import AppMobileModUserPageIndex from './AppMobile/ModUser/PageIndex';
+
+export default {
+    AppMobileModIndexPageIndex,
+    AppMobileModUserPageIndex
+};

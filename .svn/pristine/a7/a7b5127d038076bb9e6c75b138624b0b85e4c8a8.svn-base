@@ -1,0 +1,20 @@
+import React from 'react';
+import { Provider } from 'react-redux';
+import configStore from '../state/configStore';
+import { ComponentExd } from '../common/index';
+import Container from '../state/container';
+import Router from '../router';
+
+class Root extends ComponentExd {
+    render(){
+        return (
+            <Provider store={configStore}>
+                <Router {...this.props}>
+                    <Container />
+                </Router>
+            </Provider>
+        );
+    }
+}
+
+export default Root;

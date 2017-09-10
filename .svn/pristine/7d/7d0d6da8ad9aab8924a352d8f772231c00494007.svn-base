@@ -1,0 +1,23 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import ComponentExd from '../../../extentions/ComponentExd';
+
+class Footer extends ComponentExd {
+    render () {
+        return (
+            <footer className="mobile_footer">
+                <span>底部工具栏</span>
+            </footer>
+        );
+    }
+}
+
+Footer.propTypes = {
+    Data: PropTypes.array.isRequired
+};
+
+Footer.defaultProps = {
+    Data: []
+};
+
+export default Footer;

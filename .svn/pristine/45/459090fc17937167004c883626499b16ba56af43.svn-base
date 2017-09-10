@@ -1,0 +1,64 @@
+// import React from 'react';
+import { ComponentExd } from '../common';
+// import PropTypes from 'prop-types';
+
+class Router extends ComponentExd {
+    constructor(props){
+        super(props);
+        this.route = this.getRoute();
+    }
+    getOverrideUri () {
+        const app = this.getUriHash('app');
+        const mod = this.getUriHash('mod');
+        const page = this.getUriHash('page');
+        if (app && app.length>0) {
+            const appStr = this.getDefaultValue(app, 'Index');
+            const modStr = this.getDefaultValue(mod, 'Index');
+            const pageStr = this.getDefaultValue(page, 'Index');
+            return {
+                app: ['App', appStr.substr(0,1).toUpperCase(), appStr.substr(1)].join(''),
+                mod: ['Mod', modStr.substr(0,1).toUpperCase(), modStr.substr(1)].join(''),
+                page: ['Page', pageStr.substr(0,1).toUpperCase(), pageStr.substr(1)].join('')
+            };
+        } else {
+            return null;
+        }
+    }
+    getRoute(){
+        const curPath = window.location.pathname;
+        const arrStr = /^\//.test(curPath) ? curPath.substr(1) : curPath;
+        const curArr = arrStr.length > 0 ? arrStr.split('/') : [];
+        const routeResult = {
+            app: '',
+            mod: '',
+            page: ''
+        };
+        const overrideResult = this.getOverrideUri();
+        if (curArr.length<=0) {
+            routeResult.app = 'AppIndex';
+            routeResult.mod = 'ModIndex';
+            routeResult.page = 'PageIndex';
+        } else if (curArr.length === 1) {
+            routeResult.app = ['App', curArr[0].substr(0,1).toUpperCase(), curArr[0].substr(1)].join('');
+            routeResult.mod = 'ModIndex';
+            routeResult.page = 'PageIndex';
+        } else if (curArr.length === 2) {
+            routeResult.app = ['App', curArr[0].substr(0,1).toUpperCase(), curArr[0].substr(1)].join('');
+            routeResult.mod = ['Mod', curArr[1].substr(0,1).toUpperCase(), curArr[1].substr(1)].join('');
+            routeResult.page = 'PageIndex';
+        } else {
+            routeResult.app = ['App', curArr[0].substr(0,1).toUpperCase(), curArr[0].substr(1)].join('');
+            routeResult.mod = ['Mod', curArr[1].substr(0,1).toUpperCase(), curArr[1].substr(1)].join('');
+            routeResult.mod = ['Mod', curArr[2].substr(0,1).toUpperCase(), curArr[2].substr(1)].join('');
+        }
+        return overrideResult || routeResult;
+    }
+    render () {
+        return this.getChildrenContext({
+            route: this.route
+        });
+    }
+}
+
+
+export default Router;

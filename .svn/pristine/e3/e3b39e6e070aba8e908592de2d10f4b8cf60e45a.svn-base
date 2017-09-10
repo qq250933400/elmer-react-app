@@ -1,0 +1,117 @@
+@import 'common.less';
+@headHeight: 40px;
+@footHeight: 50px;
+html,body{
+    margin: 0;padding: 0;font-family: "微软雅黑";font-size:1em;color:#333;width: 100%;height:100%;overflow: hidden;
+}
+
+.mobile {
+    width: 100%;
+    height: 100%;
+    #root,#root>div,#root>div>div{display: block;width:100%;height:100%;}
+    header,header>div,header>div>span {display: block; height: @headHeight; line-height: @headHeight; }
+    header{
+        position: fixed; width: 100%;z-index: 10000;
+        >div {
+            position: relative;
+            .user_head {
+                display: block; width:30px; height: 30px;overflow:hidden;position: absolute; left: 5px; top: 5px;
+                background: transparent;border:0;padding:0;outline: none;
+                .SetRadius(100%);
+                >img {
+                    display: block;width:100%; height: 100%;
+                }
+            }
+            >span {
+                text-align: center; padding: 0 40px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;font-size:1em;
+            }
+        }
+    }
+    footer {
+        display: block; height: @footHeight;line-height: @footHeight;
+    }
+    footer {
+        position: fixed;bottom: 0;width: 100%;border-top-style: solid;border-top-width: 1px;z-index: 10000;
+    }
+    section{
+        display: block; height: 100%;
+        .SetBoxSizing(border-box);
+        >div {
+            display: block; position: relative; height:100%;
+        }
+    }
+    .context,.main_menu {.SetTransition(all 0.8s ease);}
+    .context {
+        display: block;width: 100%;height: 100%;overflow: auto; 
+    }
+    .contentBoth {
+        padding-top: @headHeight;padding-bottom: @headHeight;
+    }
+    .contentHeader {
+        padding-top: @headHeight;padding-bottom: 0;
+    }
+    .contentFooter {
+        padding-top: 0;padding-bottom: @footHeight;
+    }
+    .contentNone {
+        padding: 0;
+    }
+    .main_menu {
+        display: block;width: 100%;height: 100%;position: fixed;left: -100%; top: 0; z-index: 10001;
+        .main_menu_ct {
+            display: block; width: 85%; height: 100%;background:url(images/menuBK.jpg);
+            .main_menu_info {
+                padding: 1px; display:block;height: 140px;.SetBoxSizing(border-box);
+                .main_menu_name,.main_menu_name>a,.main_menu_name>span {
+                    display: block;height: 40px;line-height: 40px;color: #fff;
+                }
+                .main_menu_name {
+                    position: relative;padding-left: 50px;padding-right:5px;margin-top: 60px;
+                    >a{
+                        position: absolute;left: 5px;top: 0;overflow:hidden;width: 40px;
+                        .SetRadius(100%);
+                        >img {
+                            width: 100%;height: 100%;
+                        }
+                    }
+                    >span {
+                        font-size: 1.4em;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;
+                    }
+                }
+                .main_menu_sign,.main_menu_sign>span,.main_menu_sign>input[type=text]{
+                    display: block;height: 25px;line-height: 25px;color:#fff;
+                }
+                .main_menu_sign{
+                    padding: 0 10px;margin-top:4px;
+                    >input[type=text] {
+                        width: 100%;
+                    }
+                }
+            }
+            .main_menu_list {
+                display: block;background: rgba(255,255,255,0.8);.SetCalcHeight(~"100% - 175px");
+            }
+            .main_menu_bottom {
+                display: block;height: 40px;
+                background: linear-gradient(top , rgba(255, 255, 255, 0.8) , rgba(255, 255, 255, 0.901961) 98%);
+                background: -o-linear-gradient(top , rgba(255, 255, 255, 0.8) , rgba(255, 255, 255, 0.901961) 98%);
+                background: -ms-linear-gradient(top , rgba(255, 255, 255, 0.8) , rgba(255, 255, 255, 0.901961) 98%);
+                background: -moz-linear-gradient(top , rgba(255, 255, 255, 0.8) , rgba(255, 255, 255, 0.901961) 98%);
+                background: -webkit-linear-gradient(top , rgba(255, 255, 255, 0.8) , rgba(255, 255, 255, 0.901961) 98%);
+            }
+        }
+    }
+    .OpenMenu {
+        .context {margin-left: 85%;}
+        .main_menu{left:0}
+    }
+}
+
+.theme_default {
+    background:green;
+    header {background:rgba(140, 146, 253, 0.41);}
+    footer {background: #fff;border-top-color: #eeeeee;}
+    section,.main_menu_ct {background: rgba(255,255,255,0.8);}
+    .main_menu {background: rgba(10,10,10,0.4);}
+    
+}

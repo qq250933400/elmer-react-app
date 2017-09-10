@@ -1,0 +1,21 @@
+var config = require('../config/webpack.config.js'),
+    webpack = require("webpack"),
+    webpackDevServer = require("webpack-dev-server"),
+    plugins = require('../config/config.plugins.dev');
+
+try{
+    // 配置第三方插件
+    config.plugins = plugins;
+
+    var compiler = webpack(config);
+    var server = new webpackDevServer(compiler, {
+        contentBase:"../build/index.html",
+        historyApiFallback: true,
+        inline: true
+    });
+
+    server.listen(8080);
+
+}catch(e){
+    console.log(e.message);
+}

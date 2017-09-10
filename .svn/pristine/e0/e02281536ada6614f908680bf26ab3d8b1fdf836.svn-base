@@ -1,0 +1,22 @@
+var path = require('path'),
+    webpack = require('webpack'),
+    autoprefixer = require('autoprefixer'),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+module.exports = [
+    new HtmlWebpackPlugin({
+        inject: "head",
+        template: path.resolve(__dirname,"../build/index.html")
+    }),
+    new ExtractTextPlugin("[name]-[hash:3].css"),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.LoaderOptionsPlugin({
+        options: {
+            postcss: [
+                autoprefixer
+            ]
+        }
+    })
+];

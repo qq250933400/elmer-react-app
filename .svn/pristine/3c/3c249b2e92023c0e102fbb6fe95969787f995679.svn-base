@@ -1,0 +1,12 @@
+import React from 'react';
+import ComponentExd from '../../../common/extentions/ComponentExd';
+
+class PageIndex extends ComponentExd {
+    render () {
+        return (
+            <div>手机端个人中心页面</div>
+        );
+    }
+}
+
+export default PageIndex;

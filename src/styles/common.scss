@@ -1,0 +1,66 @@
+@mixin SetPerspectiveOrigin($origin: initial){
+    perspective-origin: $origin;
+}
+@mixin SetPerspective($perspective: 0){
+    perspective: $perspective;
+}
+@mixin SetTransform($transform: rotate(0deg)){
+    transform: $transform;
+}
+@mixin SetTransition($transition: none){
+    transition: $transition;
+}
+@mixin SetRadius($Radius: 0px){
+    border-radius: $Radius;
+}
+@mixin SetRadiusImportant($Radius: 0px){
+    border-radius: $Radius !important;
+}
+@mixin SetBoxShadow($shadow: none){
+    box-shadow: $shadow;
+}
+@mixin SetBoxShadowImportant($shadow: none){
+    box-shadow: $shadow;
+}
+@mixin SetAnimation($animate: none){
+    animation: $animate;
+}
+
+@mixin SetTextShadow($shadow: none){
+    text-shadow: $shadow;
+}
+@mixin SetTransformOrgin($orgin: center) {
+    transform-origin: $orgin;
+}
+@mixin SetCalcWidth($Value,$important:  0) {
+    @if $important > 0 {
+        width: calc($Value) !important;
+    } @else {
+        width: calc($Value);
+    }
+}
+
+@mixin SetCalcHeight($Value,$important: 0){
+    @if $important>0 {
+        height: calc($Value) !important;
+    } @else {
+        height: calc($Value);
+    }
+}
+@mixin SetCalcTop($Value,$important: 0){
+    @if $important>0 {
+        top: calc($Value) !important;
+    }@else {
+        top: calc($Value);
+    }
+}
+@mixin SetCalcLeft($Value,$important: 0){
+    @if $important>0 {
+        left: calc($Value) !important;
+    }@else {
+        left: calc($Value);
+    }
+}
+@mixin SetBoxSizing($value: none){
+    box-sizing: $value;
+}

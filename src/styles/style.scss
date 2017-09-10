@@ -1,0 +1,218 @@
+@import "common.scss";
+$headHeight: 40px; 
+$footHeight: 50px; 
+html,body{
+    margin: 0; padding: 0; font-family: "微软雅黑"; font-size: 1em; color: #333; width: 100%; height: 100%; overflow: hidden; 
+}
+
+.mobile {
+    width: 100%; 
+    height: 100%; 
+    header,header>div,header>div>span {display: block; height: $headHeight; line-height: $headHeight; }
+    header{
+        position: fixed; width: 100%; z-index: 10000; 
+        >div {
+            position: relative; 
+            .user_head {
+                display: block; width: 30px; height: 30px; overflow: hidden; position: absolute; left: 5px; top: 5px; 
+                background: transparent; border: 0; padding: 0; outline: none; 
+                @include SetRadius(100%); 
+                >img {
+                    display: block; width: 100%; height: 100%; 
+                }
+            }
+            >span {
+                text-align: center; padding: 0 40px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; font-size: 1em; 
+            }
+        }
+    }
+    footer {
+        display: block; height: $footHeight; line-height: $footHeight; 
+    }
+    footer {
+        position: fixed; bottom: 0; width: 100%; border-top-style: solid; border-top-width: 1px; z-index: 10000; 
+    }
+    section{
+        display: block; height: 100%; 
+        @include SetBoxSizing(border-box); 
+        >div {
+            display: block; position: relative; height: 100%; 
+        }
+    }
+    //.context, .main_menu .main_menu_ct {@include SetTransition(all 0.8s ease); }
+    .context {
+        display: block; width: 100%; height: 100%; 
+        & > section > div {
+            width: 100%; height: 100%; 
+            overflow: auto; 
+        }
+    }
+    .contentBoth {
+        padding-top: $headHeight; padding-bottom: $footHeight; 
+    }
+    .contentHeader {
+        padding-top: $headHeight; padding-bottom: 0; 
+    }
+    .contentFooter {
+        padding-top: 0; padding-bottom: $footHeight; 
+    }
+    .contentNone {
+        padding: 0; 
+    }
+    .main_menu {
+        display: none; width: 100%; height: 100%; position: fixed; left: 0; top: 0; z-index: 10001; 
+        & > div {
+            display: block;width: 100%;height: 100%;position: relative;
+        }
+        .main_menu_ct {
+            display: block; width: 85%; height: 100%; background: url(./images/menuBK.jpg); position: absolute;left: -100%;top: 0;
+            .main_menu_info {
+                padding: 1px; display: block; height: 140px; @include SetBoxSizing(border-box); 
+                .main_menu_name,.main_menu_name>a,.main_menu_name>span {
+                    display: block; height: 40px; line-height: 40px; color: #fff; 
+                }
+                .main_menu_name {
+                    position: relative; padding-left: 50px; padding-right: 5px; margin-top: 60px; 
+                    >a{
+                        position: absolute; left: 5px; top: 0; overflow: hidden; width: 40px; 
+                        @include SetRadius(100%); 
+                        >img {
+                            width: 100%; height: 100%; 
+                        }
+                    }
+                    >span {
+                        font-size: 1.4em; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; 
+                    }
+                }
+                .main_menu_sign,.main_menu_sign>span,.main_menu_sign>input[type=text]{
+                    display: block; height: 25px; line-height: 25px; color: #fff;
+                }
+                .main_menu_sign{
+                    padding: 0 10px; margin-top: 4px; 
+                    >input[type=text] {
+                        width: 100%; 
+                    }
+                }
+            }
+            .main_menu_list {
+                display: block; background: rgba(255, 255, 255, 0.8); height: calc(100% - 175px); 
+                overflow-y: auto;overflow-x: hidden;
+                ul {
+                    list-style: none;margin: 0;padding: 0;
+                    li {
+                        display: block;height: 40px;line-height: 40px; position: relative;
+                        & > div, & > a {
+                            display: block; height: 40px;line-height: 40px;position: absolute;width: 100%;left: 0;top: 0;z-index: 1;
+                            & > div {
+                                position: relative; display: block;height: 40px;padding-left: 40px;
+                                .icon {
+                                    position: absolute; left: 10px; top: 10px; width: 20px; height: 20px;line-height: 20px; text-align: center;
+                                    font-size: 1.2rem;
+                                }
+                                i {
+                                    font-style: normal;
+                                }
+                            }
+                        }
+                        & > b {
+                            display: block; width: 100%; height: 100%;position: absolute;left: 0;top: 0;z-index: 0;
+                            transform: translateX(-100%);transition: all 0.5s ease;
+                        }
+                    }
+                    .active {
+                        b {
+                            transform: translateX(0%);
+                        }
+                    }
+                }
+            }
+            .main_menu_bottom {
+                display: block; height: 40px; 
+                background: linear-gradient(to top , rgba(255, 255, 255, 0.8) , rgba(255, 255, 255, 0.901961) 98%); 
+                background: -o-linear-gradient(to top , rgba(255, 255, 255, 0.8) , rgba(255, 255, 255, 0.901961) 98%); 
+                background: -ms-linear-gradient(to top , rgba(255, 255, 255, 0.8) , rgba(255, 255, 255, 0.901961) 98%); 
+                background: -moz-linear-gradient(to top , rgba(255, 255, 255, 0.8) , rgba(255, 255, 255, 0.901961) 98%); 
+                background: -webkit-linear-gradient(to top , rgba(255, 255, 255, 0.8) , rgba(255, 255, 255, 0.901961) 98%); 
+                .main_menu_setting {
+                    display: block;
+                    height: 40px;line-height: 40px;border: 0;-webkit-appearance: none;background: transparent;
+                    padding: 0 20px; outline: none;
+                    span {
+                        display: inline-block;height: 40px;line-height: 40px;
+                    }
+                    span:last-child {
+                        padding-left: 5px; line-height: 38px;
+                    }
+                }
+            }
+        }
+    }
+    .iconList {
+        list-style: none; margin: 0;padding: 0;
+        li {
+            display: inline-block; width: 50px;height: 80px;overflow: hidden;
+            & > span {
+                display: block; width: 40px;height: 40px;font-size: 15px;margin: 0 auto;
+                text-align: center;line-height: 40px;transition: all 0.6s ease;
+                &:hover {
+                    transform: scale(2, 2);
+                }
+            }
+            & > i {
+                display: block;font-size: 12px;font-style: normal;
+            }
+        }
+    }
+    .icon {
+        display: block;
+    }
+}
+// 全局样式
+.page404 {
+    display: block;background: url(./images/404bk.jpg);background-size: cover;padding: 1px;height: 100%;
+    @include SetBoxSizing(border-box);
+    .page404Head {
+        display: block; max-width: 95%;margin: 0 auto;margin-top: 20%;
+    }
+    .page404Action {
+        display: block;width: 80%; height: 80px;margin: 0 auto;margin-top: 20%;
+        border: 4px solid rgba(10, 10, 10, 0.3);background: rgba(255, 255, 255, 0.4);
+        border-radius: 3px;
+        & > div {
+            display: block; width: 100%; height: 100%;
+            & > span {
+                display: block;font-size: 14px; color: rgba(255, 255, 255, 0.8);text-align: center;line-height: 20px;padding: 10px 0;
+                a {color: #fff;font-size: 15px;}
+            }
+            & > div {
+                display: block; margin: 5px 10px;position: relative;
+                input[type=text] {
+                    display: block;width: 100%;height: 25px;border: 1px solid rgba(10, 10, 10, 0.5);box-sizing: border-box;padding-right: 30px;font-size: 15px;-webkit-appearance: none;
+                }
+                input[type=button], button {
+                    display: block;width: 25px;height: 25px;background: transparent;-webkit-appearance: none;border: 0;color: #999;position: absolute;right: 0;top: 0;outline: none;
+                    padding: 0;text-align: center;
+                }
+            }
+        }
+    }
+}
+#root, #root>div, #root>div>div,
+#app, #app>div, #app>div>div,
+.app, .app>div, .app>div>div,.layout,.layout>div{display: block; width: 100%; height: 100%; }
+//全局样式
+.theme_default {
+    background: green; 
+    header {background: rgba(140, 146, 253, 0.41); }
+    footer {background: #fff; border-top-color: #eeeeee; }
+    section,.main_menu_ct {background: rgba(255, 255, 255, 0.8); }
+    .main_menu {background: rgba(10, 10, 10, 0.4); }
+    .main_menu .main_menu_list ul li b {background: #288DDB;}
+    .main_menu .main_menu_list ul .active {
+        & > div, & > a {
+            & > div {
+                color: #F8F6F6;
+            }
+        }
+    }
+}
