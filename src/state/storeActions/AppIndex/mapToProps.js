@@ -1,5 +1,5 @@
-export const mapStateToProps = {
-};
+export const mapStateToProps = (state) => ({
+});
 
-export const mapDispatchToProps = {
-};
+export const mapDispatchToProps = (dispatch) => ({
+});

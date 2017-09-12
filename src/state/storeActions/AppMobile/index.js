@@ -1,7 +1,7 @@
 import ModIndexReducer from './ModIndex/reducer';
-import ModIndexContainer from './ModIndex/Container';
+import ModIndexContainer from './ModIndex/voidContainer';
 import ModUserReducer from './ModUser/reducer';
-import ModUserContainer from './ModUser/Container';
+import ModUserContainer from './ModUser/voidContainer';
 
 export const ModReducers = {
     ModIndexReducer,

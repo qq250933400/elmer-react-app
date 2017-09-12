@@ -37,10 +37,10 @@ export const createAppReducers = (app) => {
         const containerFileName = [appContainerPath, '/voidContainer.js'].join('');
         const reducerCode = fs.readFileSync(path.resolve(__dirname, './source/AppState/AppReducer.source'), 'utf8');
         const containerCode = fs.readFileSync(path.resolve(__dirname, './source/AppState/AppContainer.source'), 'utf8');
-        const mapCode = 'export const mapStateToProps = {' + os.EOL +
-                        '};' + os.EOL + os.EOL +
-                        'export const mapDispatchToProps = {' + os.EOL +
-                        '};' + os.EOL;
+        const mapCode = 'export const mapStateToProps = (state) => ({' + os.EOL +
+                        '});' + os.EOL + os.EOL +
+                        'export const mapDispatchToProps = (dispatch) => ({' + os.EOL +
+                        '});' + os.EOL;
         checkDir(appContainerPath); // check path if not exists create it;
         if (!exists(containerFileName)) {
             fs.writeFileSync(actionFileName, 'export default {};' + os.EOL, 'utf8');
@@ -104,7 +104,7 @@ const createModReducerExport = (app) => {
                 const fIndex = fName.lastIndexOf('/');
                 const mod = fName.substr(fIndex + 1);
                 importResult.push(`import ${mod}Reducer from './${mod}/reducer';`);
-                importResult.push(`import ${mod}Container from './${mod}/Container';`);
+                importResult.push(`import ${mod}Container from './${mod}/voidContainer';`);
                 ModReducers.push(`${mod}Reducer`);
                 ModContainersResult.push(`${mod}Container`);
             }
@@ -133,10 +133,10 @@ const createModContainer = (app, mod) => {
                 const containerFileName = [modStatePath, '/voidContainer.js'].join('');
                 const reducerCode = fs.readFileSync(path.resolve(__dirname, './source/ModState/ModReducer.source'), 'utf8');
                 const containerCode = fs.readFileSync(path.resolve(__dirname, './source/ModState/ModContainer.source'), 'utf8');
-                const mapCode = 'export const mapStateToProps = {' + os.EOL +
-                                '};' + os.EOL + os.EOL +
-                                'export const mapDispatchToProps = {' + os.EOL +
-                                '};' + os.EOL + os.EOL;
+                const mapCode = 'export const mapStateToProps = (state) => ({' + os.EOL +
+                                '});' + os.EOL + os.EOL +
+                                'export const mapDispatchToProps = (dispatch) => ({' + os.EOL +
+                                '});' + os.EOL + os.EOL;
                 checkDir(modStatePath); // check path if not exists create it;
                 console.log(containerFileName, '----------');
                 if (!exists(containerFileName)) {
