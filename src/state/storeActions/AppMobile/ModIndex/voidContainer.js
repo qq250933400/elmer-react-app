@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { mapStateToProps, mapDispatchToProps } from './mapToProps.js';
+import { mapStateToProps, mapDispatchToProps } from './mapToProps';
 
 export default (TargetComponent, props) => {
     const ModIndexComponent = () => {

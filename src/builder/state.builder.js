@@ -40,7 +40,7 @@ export const createAppReducers = (app) => {
         const mapCode = 'export const mapStateToProps = {' + os.EOL +
                         '};' + os.EOL + os.EOL +
                         'export const mapDispatchToProps = {' + os.EOL +
-                        '};' + os.EOL + os.EOL;
+                        '};' + os.EOL;
         checkDir(appContainerPath); // check path if not exists create it;
         if (!exists(containerFileName)) {
             fs.writeFileSync(actionFileName, 'export default {};' + os.EOL, 'utf8');
@@ -143,7 +143,7 @@ const createModContainer = (app, mod) => {
                     console.log(actionFileName);
                     fs.writeFileSync(actionFileName, 'export default {};' + os.EOL, 'utf8');
                     fs.writeFileSync(reducerFileName, reducerCode, 'utf8');
-                    fs.writeFileSync(containerFileName, containerCode, 'utf8');
+                    fs.writeFileSync(containerFileName, containerCode.replace(/\$\{mod\}/g, mod), 'utf8');
                     fs.writeFileSync(propertesFileName, mapCode, 'utf8');
                     createModReducerExport(app);
                 } else {
@@ -170,6 +170,112 @@ export const createExportReducerCommand = (pathStr) => {
         createModReducerExport(app);
     }
 };
+const createPageContainer = (app, mod, page) => {
+    const pageFileName = path.resolve(__dirname, `../pages/${app}/${mod}/${page}.js`);
+    const pageContainerFileName = path.resolve(__dirname, `../state/storeActions/${app}/${mod}/${page}/container.js`);
+    const pageContainerPath = path.resolve(__dirname, `../state/storeActions/${app}/${mod}/${page}`);
+    if (exists(pageFileName)) {
+        if (!exists(pageContainerFileName)) {
+            const actionFileName = path.resolve(pageContainerPath, './action.js');
+            const containerFileName = path.resolve(pageContainerPath, './container.js');
+            const reducerFileName = path.resolve(pageContainerPath, './reducer.js');
+            const actionCode = 'export default {};' + os.EOL;
+            let containerCode = 'import { connect } from \'react-redux\';' + os.EOL +
+                                  `import ${page} from 'AliasPages/${app}/${mod}/${page}';` + os.EOL + os.EOL;
+            containerCode += 'const mapStateToProps = (state) => {' + os.EOL +
+                             '    return state;' + os.EOL +
+                             '};' + os.EOL + os.EOL +
+                             'const mapDispatchToProps = (dispatch) => {' + os.EOL +
+                             '    return {};' + os.EOL +
+                             '};' + os.EOL + os.EOL +
+                             `const ${page}Container = connect(` + os.EOL +
+                             '    mapStateToProps,' + os.EOL +
+                             '    mapDispatchToProps' + os.EOL +
+                             `)(${page});` + os.EOL + os.EOL +
+                             `export default ${page}Container;` + os.EOL;
+            const reducerCode = 'const initState = {};' + os.EOL + os.EOL +
+                                'export default (state = initState, action) => {' + os.EOL +
+                                '    return state;' + os.EOL +
+                                '};' + os.EOL;
+            checkDir(pageContainerPath);
+            fs.writeFileSync(actionFileName, actionCode, 'utf8');
+            fs.writeFileSync(containerFileName, containerCode, 'utf8');
+            fs.writeFileSync(reducerFileName, reducerCode, 'utf8');
+            createExportPageContainer();
+            console.log('Create Page Container success!!!'.green);
+        } else {
+            throw new Error('The page\'s container already exists!');
+        }
+    } else {
+        throw new Error('The page file does not exist');
+    }
+};
+const createExportPageContainer = () => {
+    const modPath = path.resolve(__dirname, '../state/storeActions');
+    const result = {};
+    const containerImportResult = [];
+    const containerExportResult = [];
+    scanFolder(modPath, (pathStr, pathString, isFolder) => {
+        if (isFolder) {
+            const pStr = pathStr.replace(/\\/g, '/');
+            const pString = pathString.replace(/\\/g, '/');
+            const pIndex = pString.lastIndexOf('/');
+            const pName = pString.substr(pIndex + 1);
+            if (/^(Page)[a-zA-Z0-9]*/.test(pName)) {
+                const containerFileName = path.resolve(pString, './container.js');
+                const reducerFileName = path.resolve(pStr, './reducer.js');
+                if (exists(containerFileName) && exists(reducerFileName)) {
+                    const routeArr = pString.match(/\/(App[a-zA-Z0-9]*)\/(Mod[a-zA-Z0-9]*)\//);
+                    const app = routeArr[1];
+                    const mod = routeArr[2];
+                    const curData = result[pStr] || {
+                        importResult: [],
+                        exportResult: [],
+                        exportJson: []
+                    };
+                    curData.importResult.push(`import ${pName}Reducer from './${pName}/reducer';`);
+                    curData.exportResult.push(`${pName}Reducer`);
+                    curData.exportJson.push(pName);
+                    result[pStr] = curData;
+                    containerImportResult.push(`import ${app}${mod}${pName}Container from './storeActions/${app}/${mod}/${pName}/container';`);
+                    containerExportResult.push(`${app}${mod}${pName}Container`);
+                }
+            }
+        }
+    });
+    // **************************export reducer code to mod folder *******/
+    Object.keys(result).map((key) => {
+        const currentData = result[key];
+        const curImportCode = currentData.importResult.join(os.EOL);
+        const curExportCode = 'export default {' + os.EOL + '    ' + currentData.exportResult.join(',' + os.EOL + '    ') + os.EOL + '};' + os.EOL;
+        const curJsonCode = 'export const InitState = {' + os.EOL + '    ' + currentData.exportJson.join(': {},' + os.EOL + '    ') + ': {}' + os.EOL + '};' + os.EOL;
+        const curCode = curImportCode + os.EOL + os.EOL + curJsonCode + os.EOL + curExportCode;
+        fs.writeFileSync(path.resolve(key, './index.js'), curCode, 'utf8');
+    });
+    // *************************export container code *******************/
+    const importCode = containerImportResult.join(os.EOL);
+    const exportCode = 'export default {' + os.EOL + '    ' + containerExportResult.join(',' + os.EOL + '    ') + os.EOL + '};' + os.EOL;
+    const exportData = 'export const PageContainersJson = ' + JSON.stringify(containerExportResult, null, 4) + ';' + os.EOL + os.EOL;
+    let code = importCode + os.EOL + os.EOL + exportData + exportCode;
+    if (containerExportResult.length <= 0) {
+        code = 'export default {};' + os.EOL;
+    }
+    fs.writeFileSync(path.resolve(__dirname, '../state/index.js'), code.replace(/"/g, '\''), 'utf8');
+    console.log('Scan storeActions folder and create index file success'.green);
+};
+export const createExportPageContainerCommand = (pathStr) => {
+    const isMatch = /[a-zA-Z0-9\/]*/.test(pathStr);
+    if (!isMatch) {
+        throw new Error('The path parameter format setting error can only contain the following characters');
+    } else {
+        const mArr = pathStr.split('/');
+        let app = mArr[0] || '';
+        let mod = mArr[1] || '';
+        app = formatRoute(app, 'app');
+        mod = formatRoute(mod, 'mod');
+        createExportPageContainer(app, mod);
+    }
+};
 export const createContainer = (pathStr) => {
     const isMatch = /[a-zA-Z0-9\/]*/.test(pathStr);
     if (!isMatch) {
@@ -187,6 +293,8 @@ export const createContainer = (pathStr) => {
         } else if (app.length > 0 && mod.length > 0 && page.length <= 0) {
             // create mod container
             createModContainer(app, mod);
+        } else if (app.length > 0 && mod.length > 0 && page.length > 0) {
+            createPageContainer(app, mod, page);
         }
     }
 };

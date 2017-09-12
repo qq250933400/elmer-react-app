@@ -2,8 +2,7 @@ import { get } from 'lodash';
 import { ModReducers } from './index';
 
 const InitializeState = {
-    AppMobile: 'testProject',
-    ModIndex: {}
+    demoProperty: 'this is the demo property,you can delete'
 };
 
 const getExtendReducerState = (state, action) => {

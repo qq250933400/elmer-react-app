@@ -6,7 +6,8 @@ import cmd from './cmd';
 import {
     createAppReduerExport,
     createContainer,
-    createExportReducerCommand
+    createExportReducerCommand,
+    createExportPageContainerCommand
 } from './state.builder';
 
 const CREATETYPES = [
@@ -15,6 +16,7 @@ const CREATETYPES = [
     'pageindex', // create pages index file and data json file
     'extmodstate',
     'extappstate', // create export app container index
+    'extpagestate', // create export page container index
     'ui' // create component
 ];
 // page local path
@@ -135,7 +137,6 @@ const cmdCreate = (cmdArguments) => {
                 if (!/^(path:)([a-zA-Z0-9\/]*)$/.test(pathString)) {
                     throw new Error('The path parameter setting is wrong, It should be [a-z,A-Z,0-9,/] ');
                 }
-                console.log(/^(path:)([a-zA-Z0-9\/]*)/.test(pathString), pathString);
                 createPage(pathValue);
             } else if (typeValue === 'pageindex') {
                 writeExportPageCode();
@@ -146,6 +147,8 @@ const cmdCreate = (cmdArguments) => {
                 createAppReduerExport();
             } else if (typeValue === 'extmodstate') {
                 createExportReducerCommand(pathValue);
+            } else if (typeValue === 'extpagestate') {
+                createExportPageContainerCommand(pathValue);
             } else {
                 console.log('error type'.red);
             }

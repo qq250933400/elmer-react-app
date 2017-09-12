@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import PageIndex from 'AliasPages/AppMobile/ModIndex/PageIndex';
+import PageIndex from 'AliasPages/AppMobile/ModUser/PageIndex';
 
 const mapStateToProps = (state) => {
     return state;

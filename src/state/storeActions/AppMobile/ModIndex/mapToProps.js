@@ -1,7 +1,6 @@
-export const mapStateToProps = (state) => ({
-    FooterData: [],
-    MobileData: []
-});
+export const mapStateToProps = {
+};
 
-export const mapDispatchToProps = (dispatch) => ({
-});
+export const mapDispatchToProps = {
+};
+

@@ -1,10 +1,14 @@
-import ModIndexContainer from './ModIndex/voidContainer';
 import ModIndexReducer from './ModIndex/reducer';
-
-export const ModContainers = {
-    ModIndexContainer
-};
+import ModIndexContainer from './ModIndex/Container';
+import ModUserReducer from './ModUser/reducer';
+import ModUserContainer from './ModUser/Container';
 
 export const ModReducers = {
-    ModIndexReducer
+    ModIndexReducer,
+    ModUserReducer
+};
+
+export const ModContainers = {
+    ModIndexContainer,
+    ModUserContainer
 };
