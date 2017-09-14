@@ -19,13 +19,21 @@ const webpackConfig = {
     bail: true,
     module: {},
     plugins: [
+        new WarnCaseSensitiveModulesPlugin(),
         new SimpleProgressPlugin(),
         new StyleLintPlugin(),
         new HtmlWebpackPlugin({
             template: `${paths.client('index.html.hbs')}`,
             hash: false,
+            compile: false,
             filename: 'index.html',
-            chunks: ['polyfill', 'app'],
+            chunks: ['polyfill', 'app', 'vendors'],
+            excludeChunks: [
+                'eslint-plugin-babel',
+                'remote-redux-devtools',
+                'builder/index.js',
+                'dev-helper'
+            ],
             chunksSortMode: (chunkA, chunkB) => {
                 return (chunkA.names[0] < chunkB.names[0]) ? 1 : -1;
             },
@@ -44,8 +52,12 @@ const webpackConfig = {
             allChunks: true
         }),
         new webpack.optimize.UglifyJsPlugin({
+            mangle: true,
             compress: {
                 warnings: false
+            },
+            output: {
+                comments: false,
             }
         }),
         new Visualizer()
@@ -56,6 +68,17 @@ const APP_ENTRY_PATH = `${paths.base(config.APP_PATH)}/${config.APP_MAIN}`;
 
 webpackConfig.entry = {
     polyfill: ['babel-polyfill'],
+    vendors: [
+        'react',
+        'react-dom',
+        'react-redux',
+        'svg-react',
+        'elmer-react-router',
+        'elmer-react-event',
+        'elmer-react-axios',
+        'axios',
+        'redux'
+    ],
     app: APP_ENTRY_PATH
 };
 
@@ -76,13 +99,15 @@ webpackConfig.resolve = {
 
 webpackConfig.output = {
     filename: '[name].[hash].js',
-    path: paths.base(config.DIST_PATH)
+    path: paths.base(config.DIST_PATH),
+    publicPath: '',
+    chunkFilename: "[id].[hash].bundle.js"
     // publicPath: `http://${config.HOST}:${config.DEV_SERVER_PORT}/`
 };
 
 
-let scssLoader = ['modules', 'localIdentName=[local]:[hash:base64]', 'importLoaders=1', 'sourceMap'];
-let cssLoader = ['modules', 'localIdentName=[local]:[hash:base64]', 'sourceMap'];
+let scssLoader = ['modules', 'localIdentName=[local]:[hash:base64]', 'importLoaders=1'];
+let cssLoader = ['modules', 'localIdentName=[local]:[hash:base64]']; //, 'sourceMap'
 
 
 scssLoader = 'css-loader?' + scssLoader.join('&');
@@ -100,6 +125,13 @@ const jsLoaders = [
 const styleLoaders = [
     {
         test: /\.scss$/,
+        // loader: ExtrackTextPlugin.extract('style-loader', 'css!scss!postcss!sass')
+        // loader: ExtrackTextPlugin.extract([
+        //     'style-loader',
+        //     scssLoader,
+        //     'postcss-loader',
+        //     'sass-loader'
+        // ])
         use: [
             'style-loader',
             scssLoader,
@@ -124,7 +156,7 @@ const fontLoader = [
         loader: 'url-loader',
         options: {
             name: 'fonts/[name].[ext]',
-            limit: '2000'
+            limit: '100'
         }
     }
 ];
@@ -136,7 +168,7 @@ const imageLoader = [
         loader: 'url-loader',
         options: {
             name: 'img/img-[hash:6].[ext]',
-            limit: '5000'
+            limit: '1000'
         }
     }
 ];

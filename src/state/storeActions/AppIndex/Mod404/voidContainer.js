@@ -3,6 +3,7 @@ import React from 'react';
 import { mapStateToProps, mapDispatchToProps } from './mapToProps';
 
 export default (TargetComponent, props) => {
+    console.log(TargetComponent);
     const Mod404Component = () => {
         return (<TargetComponent {...props} />);
     };

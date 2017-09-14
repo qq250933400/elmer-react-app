@@ -4,7 +4,7 @@ import { mapStateToProps, mapDispatchToProps } from './mapToProps.js';
 import { ModContainers } from './index';
 
 export default (TargetComponent, childProps) => {
-    const AppMobileComponent = () => {
+    const #{app}Component = () => {
         const { PageID } = childProps;
         const modMatch = PageID.match(/(Mod)([a-zA-Z0-9]*)(Page)/);
         const ModKey = [modMatch[1], modMatch[2], 'Container'].join('');
@@ -12,5 +12,5 @@ export default (TargetComponent, childProps) => {
         let DisplayComponent = ModContainer || TargetComponent;
         return (<DisplayComponent {...childProps} />);
     };
-    return connect(mapStateToProps, mapDispatchToProps)(AppMobileComponent);
+    return connect(mapStateToProps, mapDispatchToProps)(#{app}Component);
 };

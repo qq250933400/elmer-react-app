@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { AxiosProvider } from 'elmer-react-axios';
 import { ComponentExd } from '../common/index';
 import { PageContainersJson } from '../state/index';
+
 class Root extends ComponentExd {
     onRouter (nextProps) {
         const { app } = nextProps.route;
@@ -23,7 +24,7 @@ class Root extends ComponentExd {
         return (
             <Provider store={configStore}>
                 <AxiosProvider axiosConfig={axConfig}>
-                    <ElmerRouter debug={false} pages={Pages} statePages={PageContainersJson} {...this.props}
+                    <ElmerRouter pages={Pages} statePages={PageContainersJson} {...this.props}
                         setPageContainer={(props) => {
                             this.onRouter(props);
                             return (

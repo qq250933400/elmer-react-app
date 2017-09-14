@@ -44,8 +44,8 @@ export const createAppReducers = (app) => {
         checkDir(appContainerPath); // check path if not exists create it;
         if (!exists(containerFileName)) {
             fs.writeFileSync(actionFileName, 'export default {};' + os.EOL, 'utf8');
-            fs.writeFileSync(reducerFileName, reducerCode, 'utf8');
-            fs.writeFileSync(containerFileName, containerCode, 'utf8');
+            fs.writeFileSync(reducerFileName, reducerCode.replace(/#\{app\}/g, 'utf8');
+            fs.writeFileSync(containerFileName, containerCode.replace(/#\{app\}/g, app), 'utf8');
             fs.writeFileSync(propertesFileName, mapCode, 'utf8');
             createAppReduerExport();
         } else {
@@ -138,9 +138,7 @@ const createModContainer = (app, mod) => {
                                 'export const mapDispatchToProps = (dispatch) => ({' + os.EOL +
                                 '});' + os.EOL + os.EOL;
                 checkDir(modStatePath); // check path if not exists create it;
-                console.log(containerFileName, '----------');
                 if (!exists(containerFileName)) {
-                    console.log(actionFileName);
                     fs.writeFileSync(actionFileName, 'export default {};' + os.EOL, 'utf8');
                     fs.writeFileSync(reducerFileName, reducerCode, 'utf8');
                     fs.writeFileSync(containerFileName, containerCode.replace(/\$\{mod\}/g, mod), 'utf8');

@@ -16,9 +16,10 @@ window.onload = () => {
     if (app) {
         const RootComponent = ReactEventEmitter(Root);
         const config = {
-            redirectRouter: true,
+            redirectRouter: false,
             RootPath: __dirname,
-            host: '/index.html'
+            host: 'index.html',
+            debug: false
         };
         ReactDOM.render(<RootComponent {...config} />, app);
         app.className = styles.app;

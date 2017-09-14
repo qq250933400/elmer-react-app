@@ -11,7 +11,8 @@
     "lint": "eslint src",
     "lng": "babel-node ./webpack/languageBuild.js",
     "lnglint": "eslint webpack",
-    "cmd": "eslint ./src/builder && babel-node src/builder/index.js"
+    "cmd": "eslint ./src/builder && babel-node src/builder/index.js",
+    "server": "babel-node ./server/dev-server.js"
   },
   "keywords": [
     "web",

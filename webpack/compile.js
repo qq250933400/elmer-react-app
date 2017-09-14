@@ -6,10 +6,11 @@ import config from './config';
 
 const cp = ncp.ncp;
 cp.limit = 16;
-
+webpackConfig.output.publicPath = '';
 const paths = config.UTILS_PATH;
 const compiler = webpack(webpackConfig);
-
+// console.log(JSON.stringify(config.UTILS_PATH), webpackConfig);
+// throw new Error('error');
 compiler.run((err,stats) => {
     if (err) {
         gutil.log(err);

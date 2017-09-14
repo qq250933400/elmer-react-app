@@ -4,7 +4,6 @@ import {
 import UserHead from 'AliasImages/userhead.jpg';
 
 export const mapStateToProps = (state) => {
-    console.log(state, '******************************************');
     return {
         UserHead,
         ...state

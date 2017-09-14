@@ -2,7 +2,7 @@ import React from 'react';
 import ComponentExd from '../extentions/ComponentExd';
 import PropTypes from 'prop-types';
 import Pages from '../../pages/index';
-// import Language from './Language';
+import PageContainers from '../../state/index';
 import { VoidContainer } from '../../state/storeActions';
 
 class PageContainer extends ComponentExd {
@@ -34,12 +34,13 @@ class PageContainer extends ComponentExd {
             const reg = /([a-zA-Z0-9]*)(Container)$/;
             let curPage = '';
             if (reg.test(PageID)) {
-                curPage = (<div>Container Page structure is building...</div>);
+                curPage = curPage !== null && curPage !== undefined ? PageContainers[PageID] : null;
             } else {
-                curPage = Pages[PageID] || (<span>404 Page Not Found</span>);
+                console.log(Pages[PageID]);
+                curPage = Pages[PageID] ? this.getPageWithAppContainer(Pages[PageID]) : Pages[PageID];
             }
             this.isExists = true;
-            return this.getPageWithAppContainer(curPage);
+            return curPage;
         } catch (e) {
             this.isExists = false;
             this.path = `${app}/${mod}/${page}`;
@@ -74,28 +75,17 @@ class PageContainer extends ComponentExd {
                 const PageElement = <CurrentPage {...this.props} />;
                 return PageElement;
             } else {
-                let ReactPage404 = null;
-                if (this.props.route.app === 'AppMobile') {
-                    const key = 'AppMobileMod404Page404';
-                    const Page404 = Pages[key];
-                    ReactPage404 = <Page404 {...this.props} />;
-                } else {
-                    const key = 'AppIndexMod404Page404';
-                    const TmpPage404 = Pages[key];
-                    ReactPage404 = <TmpPage404 {...this.props} />;
-                }
-                if (!ReactPage404) {
-                    ReactPage404 = (
-                        <div>
-                            <h1>Page not found(404)</h1>
-                            <span>{this.path}</span>
-                        </div>
-                    );
-                }
+                const ReactPage404 = (
+                    <div>
+                        <h1>Page not found(404)</h1>
+                        <span>{this.path}</span>
+                    </div>
+                );
                 return ReactPage404;
             }
         })();
         const CurrentPage = displayPage;
+        console.log(CurrentPage, '----------------------------->><<----------------');
         return (CurrentPage);
     }
 }
@@ -110,6 +100,7 @@ PageContainer.contextTypes = {
     store: PropTypes.object.isRequired
 };
 PageContainer.defaultProps = {
+    PageID: '',
     route: {
         app: 'AppIndex',
         mod: 'ModIndex',
