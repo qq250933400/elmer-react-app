@@ -1,0 +1,69 @@
+$margeTopSize: 10px;
+
+.layout_first_level {
+    display: block;
+    height: 340px;
+    margin-top: $margeTopSize;
+    .layout_first_level_left {
+        display: block;
+        width: 300px;
+        height: 340px;
+        float: left;
+    }
+    .layout_first_level_right {
+        display: block;
+        width: calc(100% - 310px);
+        width: -wekit-calc(100% - 310px);
+        width: -ms-calc(100% - 310px);
+        width: -moz-calc(100% - 310px);
+        height: 340px;
+        float: right;
+    }
+}
+
+.largeAd {
+    display: block;
+    height: 100px;
+    margin-top: $margeTopSize;
+}
+.layoutLineSplit {
+    display: block;
+    height: $margeTopSize;
+    padding: 0;
+    margin: 0;
+}
+.layoutSecondLevel {
+    position: relative;
+    display: block;
+    margin-top: $margeTopSize;
+    .layoutSecondLevelLeft {
+        display: block;
+        width: 769px;
+        height: auto;
+        float: left;
+        overflow: hidden;
+        & > div {
+            display: block;
+            height: auto;
+            overflow: hidden;
+            .layoutSecondLevelCt1,
+            .layoutSecondLevelCt2 {
+                display: block;
+                width: 380px;
+            }
+            .layoutSecondLevelCt1 {
+                float: left;
+            }
+            .layoutSecondLevelCt2 {
+                float: right;
+            }
+        }
+    }
+    .layoutSecondLevelRight {
+        display: block;
+        width: 240px;
+        height: auto;
+        float: right;
+        overflow: hidden;
+    }
+}

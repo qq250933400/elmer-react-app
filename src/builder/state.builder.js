@@ -44,9 +44,10 @@ export const createAppReducers = (app) => {
         checkDir(appContainerPath); // check path if not exists create it;
         if (!exists(containerFileName)) {
             fs.writeFileSync(actionFileName, 'export default {};' + os.EOL, 'utf8');
-            fs.writeFileSync(reducerFileName, reducerCode.replace(/#\{app\}/g, 'utf8');
+            fs.writeFileSync(reducerFileName, reducerCode.replace(/#\{app\}/g, app), 'utf8');
             fs.writeFileSync(containerFileName, containerCode.replace(/#\{app\}/g, app), 'utf8');
             fs.writeFileSync(propertesFileName, mapCode, 'utf8');
+            fs.writeFileSync(appContainerPath + '/index.js', '');
             createAppReduerExport();
         } else {
             throw new Error('The container you want to create already exists!');
@@ -143,7 +144,9 @@ const createModContainer = (app, mod) => {
                     fs.writeFileSync(reducerFileName, reducerCode, 'utf8');
                     fs.writeFileSync(containerFileName, containerCode.replace(/\$\{mod\}/g, mod), 'utf8');
                     fs.writeFileSync(propertesFileName, mapCode, 'utf8');
+                    fs.writeFileSync(modStatePath + '/index.js', '');
                     createModReducerExport(app);
+                    console.log(`${app}/${mod} container was create success!`);
                 } else {
                     throw new Error('The container you want to create already exists!');
                 }

@@ -36,7 +36,6 @@ class PageContainer extends ComponentExd {
             if (reg.test(PageID)) {
                 curPage = curPage !== null && curPage !== undefined ? PageContainers[PageID] : null;
             } else {
-                console.log(Pages[PageID]);
                 curPage = Pages[PageID] ? this.getPageWithAppContainer(Pages[PageID]) : Pages[PageID];
             }
             this.isExists = true;
@@ -85,7 +84,6 @@ class PageContainer extends ComponentExd {
             }
         })();
         const CurrentPage = displayPage;
-        console.log(CurrentPage, '----------------------------->><<----------------');
         return (CurrentPage);
     }
 }

@@ -16,6 +16,7 @@ const getExtendReducerState = (state, action) => {
                 ...state
             };
             nState[rKey] = {
+                ...InitializeState[rKey],
                 ...newStateValue
             };
             returnState = nState;

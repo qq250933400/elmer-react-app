@@ -60,7 +60,7 @@ const writeExportPageCode = () => {
     scanFolder(PAGEPATH, (parent, result, isDirectory) => {
         if (!isDirectory) {
             const resolveFileName = result.substr(PAGEPATH.length);
-            if (resolveFileName !== '/index.js') {
+            if (resolveFileName !== '/index.js' && !/\.json$/.test(resolveFileName)) {
                 const exportName = resolveFileName.replace(/\.js$/, '').replace(/\//g, '');
                 importArr.push(`import ${exportName} from '.${resolveFileName}';`);
                 exportArr.push(exportName);
@@ -156,7 +156,7 @@ const cmdCreate = (cmdArguments) => {
             throw new Error('The type parameter setting is wrong,It should be "page" or "ui".');
         }
     } else if (type === 'help') {
-        const types = CREATETYPES.join(',');
+        const types = os.EOL + CREATETYPES.join(',' + os.EOL);
         console.log(`create type should be one of ${types}`.blue);
     } else {
         throw new Error('The create command must specify the creation type' + os.EOL + '[exp]    Example:  yarn cmd create type:page path:mobile/user/index'.blue);
